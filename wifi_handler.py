@@ -1,4 +1,5 @@
 import network
+import file_tools
 
 wlan = network.WLAN(network.STA_IF)
 
