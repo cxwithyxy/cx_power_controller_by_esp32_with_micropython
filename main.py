@@ -3,6 +3,7 @@ import utime
 import microWebSrv
 import wifi_handler
 from microWebSrv import MicroWebSrv
+import file_tools
 
 def charging_state(key = None):
     p4 = Pin(4, Pin.OUT)
@@ -26,3 +27,5 @@ wifi_handler.connect()
 mws = MicroWebSrv(webPath="/")
 mws.Start(threaded=True)
 print("===== system ready =====")
+
+# print(file_tools.read_json("wifi.json"))
