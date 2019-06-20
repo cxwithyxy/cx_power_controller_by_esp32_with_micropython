@@ -1,9 +1,9 @@
 import wifi_handler
-import charging_handle
-from microWebSrv import MicroWebSrv
+import charging_handler
+import web_handler
+
 
 wifi_handler.connect()
+web_handler.start()
 
-mws = MicroWebSrv(webPath="/")
-mws.Start(threaded=True)
 print("===== system ready =====")
