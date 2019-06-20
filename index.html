@@ -4,9 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>控制你的充电器</title>
 </head>
 <body>
-    测试一下看看能不能搞
+    <h1>控制你的充电器</h1>
+    <br/>
+    <button onclick="power_on()">接通</button>
+    <br/>
+    <br/>
+    <button onclick="power_off()">断开</button>
+    <script>
+        function power_on()
+        {
+            fetch("power_on")
+        }
+        function power_off()
+        {
+            fetch("power_off")
+        }
+    </script>
 </body>
 </html>
