@@ -1,6 +1,8 @@
 from machine import Pin
 import utime
 import microWebSrv
+import wifi_handler
+from microWebSrv import MicroWebSrv
 
 def charging_state(key = None):
     p4 = Pin(4, Pin.OUT)
@@ -19,6 +21,8 @@ def switch_charging_state():
 #     utime.sleep(3)
 #     switch_charging_state()
 
-from microWebSrv import MicroWebSrv
+wifi_handler.connect()
+# wifi_handler.get_ip()
 mws = MicroWebSrv(webPath="/")
 mws.Start(threaded=True)
+print("===== system ready =====")
