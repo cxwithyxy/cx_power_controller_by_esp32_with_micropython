@@ -121,8 +121,8 @@
       {
         batteryManager = await navigator.getBattery();
       }
-      let bb = test_b;
-      // batteryManager.level * 100
+      // let bb = test_b;
+      let bb = batteryManager.level * 100
       app.battery_level = bb;
       return bb;
     }
@@ -146,11 +146,11 @@
       }
     },5000)
 
-    let test_b = 10;
+    // let test_b = 10;
 
-    setInterval(() => {
-      test_b++
-    }, 2000)
+    // setInterval(() => {
+    //   test_b++
+    // }, 2000)
   </script>
 </body>
 </html>
