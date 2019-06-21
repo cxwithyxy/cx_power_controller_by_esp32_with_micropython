@@ -51,6 +51,7 @@
                   :range = true
                   :step = 5
                   :marks = "power_line_marks"
+                  v-model = "power_setting_value"
                   >
                 </el-slider>
             </div></el-col>
@@ -65,24 +66,48 @@
     
   </div>
   <script>
-    new Vue({
+    let batteryManager = null;
+    let app = new Vue({
       el: '#app',
       data: { 
           power_line_marks: {
             25:'25%',
             50:'50%',
             80:'80%',
-          }
+          },
+          power_setting_value:[25, 80]
       }
     });
+
     function power_on()
     {
-      fetch("power_on")
+      fetch("power_on");
     }
     function power_off()
     {
-      fetch("power_off")
+      fetch("power_off");
     }
+
+    async function get_battery()
+    {
+      if(!batteryManager)
+      {
+        batteryManager = await navigator.getBattery();
+      }
+      // return batteryManager.level * 100
+      return 10;
+    }
+
+    async function can_charging()
+    {
+      let battery_level = await get_battery();
+      return app.power_setting_value[0] <= battery_level && battery_level <= app.power_setting_value[1]
+    }
+
+    setInterval(async () =>
+    {
+      console.log(await can_charging());
+    },1000)
   </script>
 </body>
 </html>
