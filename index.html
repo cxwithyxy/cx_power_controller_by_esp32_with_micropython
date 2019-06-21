@@ -1,27 +1,82 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>控制你的充电器</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  
+  <title>控制你的充电器</title>
+  
 </head>
 <body>
-    <h1>控制你的充电器</h1>
-    <br/>
-    <button onclick="power_on()">接通</button>
-    <br/>
-    <br/>
-    <button onclick="power_off()">断开</button>
-    <script>
-        function power_on()
-        {
-            fetch("power_on")
-        }
-        function power_off()
-        {
-            fetch("power_off")
-        }
-    </script>
+  
+  <div id="app">
+    <el-row type="flex" class="row-bg" justify="center">
+      <el-col :span="6">
+        <div class="grid-content ">
+        </div>
+      </el-col>
+      <el-col :span="12">
+        <div class="grid-content ">
+          <h1>
+            控制你的充电器
+          </h1>
+          <el-divider></el-divider>
+          <el-row>
+            <el-col :span="12"><div class="grid-content ">
+              <h4>
+                手动操作按钮
+              </h4>
+            </div></el-col>
+            <el-col :span="6"><div class="grid-content ">
+              <el-button type="danger" onclick="power_on()">接通</el-button>
+            </div></el-col>
+            <el-col :span="6"><div class="grid-content ">
+              <el-button type="success" onclick="power_off()">断开</el-button>
+            </div></el-col>
+          </el-row>
+          <el-divider></el-divider>
+          <el-row>
+            <el-col :span="12"><div class="grid-content ">
+              <h4>
+                手动操作按钮
+              </h4>
+            </div></el-col>
+            <el-col :span="6"><div class="grid-content ">
+              <el-button type="danger" onclick="power_on()">接通</el-button>
+            </div></el-col>
+            <el-col :span="6"><div class="grid-content ">
+              <el-button type="success" onclick="power_off()">断开</el-button>
+            </div></el-col>
+          </el-row>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content ">
+        </div>
+      </el-col>
+    </el-row>
+    
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+      return { visible: false }
+      }
+    });
+    function power_on()
+    {
+      fetch("power_on")
+    }
+    function power_off()
+    {
+      fetch("power_off")
+    }
+  </script>
 </body>
 </html>
