@@ -16,11 +16,11 @@
   
   <div id="app">
     <el-row type="flex" class="row-bg" justify="center">
-      <el-col :span="6">
+      <el-col :span="4">
         <div class="grid-content ">
         </div>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="16">
         <div class="grid-content ">
           <h1>
             控制你的充电器
@@ -43,19 +43,21 @@
           <el-row>
             <el-col :span="12"><div class="grid-content ">
               <h4>
-                手动操作按钮
+                基于电量自动控制接通
               </h4>
             </div></el-col>
-            <el-col :span="6"><div class="grid-content ">
-              <el-button type="danger" onclick="power_on()">接通</el-button>
-            </div></el-col>
-            <el-col :span="6"><div class="grid-content ">
-              <el-button type="success" onclick="power_off()">断开</el-button>
+            <el-col :span="12"><div class="grid-content ">
+                <el-slider
+                  :range = true
+                  :step = 5
+                  :marks = "power_line_marks"
+                  >
+                </el-slider>
             </div></el-col>
           </el-row>
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <div class="grid-content ">
         </div>
       </el-col>
@@ -65,8 +67,12 @@
   <script>
     new Vue({
       el: '#app',
-      data: function() {
-      return { visible: false }
+      data: { 
+          power_line_marks: {
+            25:'25%',
+            50:'50%',
+            80:'80%',
+          }
       }
     });
     function power_on()
