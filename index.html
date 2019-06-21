@@ -31,7 +31,18 @@
                 </span>
               </el-col>
               <el-col :span="18">
-                <el-progress :text-inside="true" :stroke-width="34" :percentage="battery_level" status="success"></el-progress>
+                <el-progress :text-inside="true" :stroke-width="18" :percentage="battery_level" status="success"></el-progress>
+              </el-col>
+            </el-row>
+            <el-row  type="flex" align="middle">
+              <el-col :span="12">
+                <span>
+                  充电器接通状态:
+                </span>
+              </el-col>
+              <el-col :span="12">
+                  <svg v-if="is_charging" t="1561112842271" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10685" width="18" height="18"><path d="M807.822222 442.595556H614.4l64.853333-414.151112L227.555556 570.026667h225.28l-63.715556 414.151111z" fill="#c21903" p-id="10686"></path></svg>
+                  <svg v-if="!is_charging" t="1561112939578" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15674" width="18" height="18"><path d="M805.356486 773.506415c-19.011623 18.876377-46.60166 15.128151-62.174189-1.004679a110307.115472 110307.115472 0 0 0-384.193207-392.790944c-87.638943-89.426113-75.061132-78.200755-162.970566-167.027924-7.593057-7.631698-14.316679-16.13283-22.180227-23.329811-19.861736-18.712151-29.039094-37.578868-4.443773-59.89434 19.166189-17.581887 40.042264-15.997585 63.49766 7.631698C368.147128 273.002264 402.740939 309.431547 537.850977 445.797434 642.791656 551.056906 699.700939 608.652075 804.651278 713.901887c5.718943 5.603019 20.74083 39.578566 0.714868 59.604528h-0.00966zM667.242071 377.556528c58.194113 0 106.650566-0.135245 155.696302 0 33.308981 0.135245 49.325887 23.320151 29.039094 47.509736a845.824 845.824 0 0 1-102.390339 101.665811c-14.297358 11.949887-37.743094 10.365585-55.02551-8.21132a78596.955774 78596.955774 0 0 0-335.572528-357.520906c-12.29766-12.674415-12.432906-25.059019-7.583396-39.897358 10.297962-31.811623 21.880755-63.642566 29.464151-96.313963C385.729014 4.59834 395.59226 0 414.188486 0c139.689057 0.579623 279.233208 0 419.192755 0.579623 38.602868 0.144906 45.761208 16.007245 23.609962 53.846943-49.91517 85.832453-100.950943 171.075623-151.426415 256.444377-11.437887 20.025962-22.441057 39.907019-38.313057 66.675925zM430.630448 676.892981c-70.617358 0-135.960151 0.579623-201.447849-0.135245-49.91517-0.579623-60.483623-15.688453-43.046641-62.067925 22.160906-58.735094 47.046038-116.47517 68.492075-175.37449 12.867623-34.844981 33.743698-34.400604 55.180076-12.944906 95.22234 94.430189 189.884377 190.193509 284.102037 285.657359 19.571925 19.736151 20.286792 41.191849 0.985359 61.758792-73.187019 78.790038-147.253132 157.541434-221.17434 236.601962-9.73766 10.346264-21.735849 17.987623-34.31366 10.780981-15.012226-8.501132-12.577811-22.740528-7.573736-38.15849A63738.590189 63738.590189 0 0 0 430.630448 676.902642z" p-id="15675" fill="#0e932e"></path></svg>
               </el-col>
             </el-row>
           </el-col>
@@ -58,13 +69,19 @@
             </h4>
           </el-col>
           <el-col :span="12">
-              <el-slider
-                :range = true
-                :step = 5
-                :marks = "power_line_marks"
-                v-model = "power_setting_value"
-                >
-              </el-slider>
+              <div>
+                <el-slider
+                  :range = true
+                  :step = 5
+                  :marks = "power_line_marks"
+                  v-model = "power_setting_value"
+                  >
+                </el-slider>
+              </div>
+              <br>
+              <div style="font-size: 12px; text-align: center">
+                当前设置: 在低于 {{ power_setting_value[0] }}% 时会接通充电，在高于 {{ power_setting_value[1] }}% 时会断开
+              </div>
           </el-col>
         </el-row>
       </el-col>
@@ -82,19 +99,20 @@
             80:'80%',
           },
           power_setting_value:[25, 80],
-          battery_level: 0
+          battery_level: 0,
+          is_charging: false
       },
     });
 
     function power_on()
     {
       fetch("power_on");
-      console.log("power_on");
+      app.is_charging = true;
     }
     function power_off()
     {
       fetch("power_off");
-      console.log("power_off");
+      app.is_charging = false;
     }
 
     async function get_battery()
@@ -103,9 +121,10 @@
       {
         batteryManager = await navigator.getBattery();
       }
-      // return batteryManager.level * 100
-      app.battery_level = test_b;
-      return test_b;
+      let bb = test_b;
+      // batteryManager.level * 100
+      app.battery_level = bb;
+      return bb;
     }
 
     async function can_charging()
