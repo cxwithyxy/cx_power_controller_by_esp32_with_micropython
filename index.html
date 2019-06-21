@@ -82,10 +82,12 @@
     function power_on()
     {
       fetch("power_on");
+      console.log("power_on");
     }
     function power_off()
     {
       fetch("power_off");
+      console.log("power_off");
     }
 
     async function get_battery()
@@ -95,7 +97,7 @@
         batteryManager = await navigator.getBattery();
       }
       // return batteryManager.level * 100
-      return 10;
+      return test_b;
     }
 
     async function can_charging()
@@ -106,8 +108,22 @@
 
     setInterval(async () =>
     {
-      console.log(await can_charging());
-    },1000)
+      let battery_level = await get_battery();
+      if(battery_level < app.power_setting_value[0])
+      {
+        power_on()
+      }
+      if(battery_level > app.power_setting_value[1])
+      {
+        power_off()
+      }
+    },5000)
+
+    let test_b = 10;
+
+    setInterval(() => {
+      test_b++
+    }, 2000)
   </script>
 </body>
 </html>
